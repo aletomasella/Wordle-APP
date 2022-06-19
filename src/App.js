@@ -1,25 +1,32 @@
 import { useEffect, useState } from "react";
 import { randomSelect } from "./utils";
+import axios from "axios";
+import Wordle from "./components/Wordle";
 
 function App() {
-  const [solution, setSolution] = useState("");
+  const [solution, setSolution] = useState(null);
   const [options, setOptions] = useState(null);
 
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then((res) => res.json())
+    axios
+      .get("https://restcountries.com/v3.1/all")
+      .then((res) => res.data)
       .then((res) => res.map((e) => e.name.common))
-      .then((names) => setSolution(randomSelect(names)))
+      .then((names) =>
+        names.filter((name) => !name.includes(" ") && name.length <= 7)
+      )
+      .then((filterNames) => setSolution(randomSelect(filterNames)))
       .catch((err) => console.error(err));
-
-    return setSolution("");
   }, []);
 
   return (
     <>
-      <div className="text-4xl bg-[#012] h-full w-full flex min-h-screen text-orange-500 text-center justify-center items-center mx-auto">
-        {solution}
-      </div>
+      {solution && (
+        <div className="text-4xl bg-[#012] h-full w-full flex flex-col min-h-screen text-orange-500 text-center justify-center items-center mx-auto">
+          The solution is : {solution}
+          <Wordle solution={solution} />
+        </div>
+      )}
     </>
   );
 }
