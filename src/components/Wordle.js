@@ -20,7 +20,7 @@ const Wordle = ({ solution }) => {
     <>
       <div className="flex flex-col h-[100px] w-full text-center items-center">
         <h1>The solution is : {solution}</h1>
-        <div>{currentGuess}</div>
+        <div>Current guess is : {currentGuess}</div>
         <Grid
           currentGuess={currentGuess}
           guesses={guesses}

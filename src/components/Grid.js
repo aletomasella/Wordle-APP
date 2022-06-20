@@ -7,7 +7,18 @@ const Grid = ({ currentGuess, guesses, turn, solutionLength }) => {
     <>
       <div>
         {guesses.map((g, i) => {
-          return <Row key={i} numberOfRows={solutionLength} guess={g} />;
+          if (turn === i) {
+            return (
+              <Row
+                key={i}
+                numberOfRows={solutionLength}
+                guess={g}
+                currentGuess={currentGuess}
+              />
+            );
+          } else {
+            return <Row key={i} numberOfRows={solutionLength} guess={g} />;
+          }
         })}
       </div>
     </>
