@@ -48,7 +48,13 @@ const useWordle = (solution) => {
   const handleKey = ({ key }) => {
     if (key === "Enter") {
       if (turn > 5) {
-        alert("You lost");
+        if (
+          window.confirm(
+            `You lost, the solution was ${solution} wanna play again?`
+          )
+        ) {
+          window.location.reload();
+        }
         return;
       }
       if (history.includes(currentGuess)) {

@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       {solution && (
-        <div className="text-4xl bg-[#012] h-full w-full flex flex-col min-h-screen text-orange-500 text-centerssdasd items-center mx-auto">
+        <div className="text-4xl bg-[#012] h-full w-full flex flex-col min-h-screen text-orange-500 text-centerssdasd items-center mx-auto justify-center">
           <Wordle solution={solution} />
         </div>
       )}
