@@ -18,7 +18,7 @@ const Wordle = ({ solution }) => {
 
   return (
     <>
-      <div className="flex flex-col h-[100px] w-full text-center items-center justify-center">
+      <div className="flex flex-col h-100vh w-full text-center items-center justify-center">
         {/* <h1>The solution is : {solution}</h1> */}
         {/* <div>Current guess is : {currentGuess}</div> */}
         <h1 className="mb-10 text-6xl">Wordle Clone </h1>

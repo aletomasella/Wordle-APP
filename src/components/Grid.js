@@ -5,7 +5,7 @@ const Grid = ({ currentGuess, guesses, turn, solutionLength }) => {
   const [numberOfGuesses, setNumberOfGuesses] = useState([...Array(6)]);
   return (
     <>
-      <div>
+      <div className="">
         {guesses.map((g, i) => {
           if (turn === i) {
             return (
