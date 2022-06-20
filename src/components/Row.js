@@ -15,6 +15,7 @@ const Row = ({ numberOfRows, guess, currentGuess }) => {
             <div
               key={i}
               className={`w-[60px] h-[60px] border-2 border-solid p-2 m-2 text-center font-bold bg-slate-100 rounded ${letter.color} border-gray-500`}
+              style={{ animationDelay: `${0.3 * i}s` }}
             >
               {letter.key}
             </div>
@@ -32,7 +33,7 @@ const Row = ({ numberOfRows, guess, currentGuess }) => {
           return (
             <div
               key={i}
-              className="w-[60px] h-[60px] border-2 border-solid border-gray-500 p-2 m-2 text-center font-bold bg-slate-100 rounded"
+              className="w-[60px] h-[60px] border-2 border-solid border-gray-500 p-2 m-2 text-center font-bold bg-slate-100 rounded filled"
             >
               {letter}
             </div>
