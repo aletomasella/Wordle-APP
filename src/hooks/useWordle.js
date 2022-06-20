@@ -3,12 +3,12 @@ const { useState } = require("react");
 const useWordle = (solution) => {
   const [turn, setTurn] = useState(0);
   const [currentGuess, setCurrentGuess] = useState("");
-  const [guesses, setGuesses] = useState([]);
+  const [guesses, setGuesses] = useState([...Array(6)]);
   const [history, setHistory] = useState([]);
   const [isCorrect, setIsCorrect] = useState(false);
 
   const formatGuess = () => {
-    const arraySolution = solution.toUpperCase().split("");
+    const arraySolution = solution.split("");
     const formattedGuess = currentGuess
       .toUpperCase()
       .split("")
@@ -17,8 +17,6 @@ const useWordle = (solution) => {
       });
 
     formattedGuess.forEach((el, i) => {
-      console.log(el);
-      console.log(i);
       if (arraySolution[i] === el.key) {
         el.color = "green";
         return;
@@ -27,13 +25,23 @@ const useWordle = (solution) => {
         el.color = "yellow";
       }
     });
-    console.log(formattedGuess);
+    return formattedGuess;
   };
 
-  const addNewGuess = () => {
+  const addNewGuess = (formattedGuess) => {
+    if (currentGuess === solution) {
+      setIsCorrect(true);
+
+      if (window.confirm("You won, wanna play again?")) {
+        window.location.reload();
+      }
+    }
     setHistory((prev) => [...prev, currentGuess]);
-    setGuesses((prev) => [...prev, currentGuess.split("")]);
-    console.log(guesses);
+    setGuesses((prev) => {
+      prev[turn] = formattedGuess;
+      return prev;
+    });
+    setTurn((prev) => prev + 1);
     setCurrentGuess("");
   };
 
@@ -51,7 +59,8 @@ const useWordle = (solution) => {
         alert(`Word must be ${solution.length} long.`);
         return;
       }
-      formatGuess();
+      const formatted = formatGuess();
+      addNewGuess(formatted);
     }
     // console.log(key);
     if (key === "Backspace") {
@@ -61,7 +70,7 @@ const useWordle = (solution) => {
 
     if (/^[A-Za-z]$/.test(key)) {
       if (currentGuess.length < solution.length) {
-        setCurrentGuess((prev) => prev + key);
+        setCurrentGuess((prev) => prev + key.toUpperCase());
       }
     }
   };

@@ -17,13 +17,14 @@ function App() {
       )
       .then((filterNames) => setSolution(randomSelect(filterNames)))
       .catch((err) => console.error(err));
+
+    return () => setSolution(null);
   }, []);
 
   return (
     <>
       {solution && (
-        <div className="text-4xl bg-[#012] h-full w-full flex flex-col min-h-screen text-orange-500 text-center justify-center items-center mx-auto">
-          The solution is : {solution}
+        <div className="text-4xl bg-[#012] h-full w-full flex flex-col min-h-screen text-orange-500 text-centerssdasd items-center mx-auto">
           <Wordle solution={solution} />
         </div>
       )}
