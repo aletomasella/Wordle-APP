@@ -6,6 +6,7 @@ const useWordle = (solution) => {
   const [guesses, setGuesses] = useState([...Array(6)]);
   const [history, setHistory] = useState([]);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [usedKeys, setUsedKeys] = useState({});
 
   const formatGuess = () => {
     const arraySolution = solution.split("");
@@ -31,10 +32,6 @@ const useWordle = (solution) => {
   const addNewGuess = (formattedGuess) => {
     if (currentGuess === solution) {
       setIsCorrect(true);
-
-      if (window.confirm("You won, wanna play again?")) {
-        window.location.reload();
-      }
     }
     setHistory((prev) => [...prev, currentGuess]);
     setGuesses((prev) => {
@@ -42,19 +39,36 @@ const useWordle = (solution) => {
       return prev;
     });
     setTurn((prev) => prev + 1);
+    setUsedKeys((prev) => {
+      const newKeys = { ...prev };
+      formattedGuess.forEach((l) => {
+        const currentColor = newKeys[l.key];
+        if (l.color === "green") {
+          newKeys[l.key] = "green";
+          return;
+        }
+        if (l.color === "yellow" && currentColor !== "green") {
+          newKeys[l.key] = "yellow";
+          return;
+        }
+        if (
+          l.color === "grey" &&
+          currentColor !== "green" &&
+          currentColor !== "yellow"
+        ) {
+          newKeys[l.key] = "grey";
+          return;
+        }
+      });
+      return { ...newKeys };
+    });
     setCurrentGuess("");
   };
 
   const handleKey = ({ key }) => {
     if (key === "Enter") {
       if (turn > 5) {
-        if (
-          window.confirm(
-            `You lost, the solution was ${solution} wanna play again?`
-          )
-        ) {
-          window.location.reload();
-        }
+        console.log("Game Over");
         return;
       }
       if (history.includes(currentGuess)) {
@@ -81,7 +95,7 @@ const useWordle = (solution) => {
     }
   };
 
-  return { turn, currentGuess, guesses, isCorrect, handleKey };
+  return { turn, currentGuess, guesses, isCorrect, handleKey, usedKeys };
 };
 
 export default useWordle;

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { randomSelect } from "./utils";
 import axios from "axios";
 import Wordle from "./components/Wordle";
-import Keypad from "./components/Keypad";
 
 function App() {
   const [solution, setSolution] = useState(null);
@@ -27,7 +26,6 @@ function App() {
       {solution && (
         <div className="text-4xl bg-[#012] h-full w-full flex flex-col min-h-screen text-orange-500 text-centerssdasd items-center mx-auto justify-center">
           <Wordle solution={solution} />
-          <Keypad />
         </div>
       )}
     </>
