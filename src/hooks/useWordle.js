@@ -7,6 +7,11 @@ const useWordle = (solution) => {
   const [history, setHistory] = useState([]);
   const [isCorrect, setIsCorrect] = useState(false);
   const [usedKeys, setUsedKeys] = useState({});
+  const [errors, setErrors] = useState("");
+
+  const handleErrors = (error) => {
+    setErrors(error);
+  };
 
   const formatGuess = () => {
     const arraySolution = solution.split("");
@@ -72,11 +77,11 @@ const useWordle = (solution) => {
         return;
       }
       if (history.includes(currentGuess)) {
-        alert("You already tried that word.");
+        handleErrors("You already tried that word.");
         return;
       }
       if (currentGuess.length !== solution.length) {
-        alert(`Word must be ${solution.length} long.`);
+        handleErrors(`Word must be ${solution.length} letters long.`);
         return;
       }
       const formatted = formatGuess();
@@ -95,7 +100,16 @@ const useWordle = (solution) => {
     }
   };
 
-  return { turn, currentGuess, guesses, isCorrect, handleKey, usedKeys };
+  return {
+    turn,
+    currentGuess,
+    guesses,
+    isCorrect,
+    handleKey,
+    usedKeys,
+    errors,
+    handleErrors,
+  };
 };
 
 export default useWordle;
